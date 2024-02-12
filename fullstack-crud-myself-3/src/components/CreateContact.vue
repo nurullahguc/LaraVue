@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <AppLoading v-if="isLoading"/>
+  <div class="container" v-else>
     <div class="card p-5">
       <div class="row">
         <div class="col-md-6">
@@ -46,28 +47,33 @@
 
 
 <script setup>
-import {reactive, ref} from "vue";
+import {onBeforeMount, onMounted, reactive, ref} from "vue";
 import axios from "axios";
 import {useToast} from 'vue-toast-notification'
+import AppLoading from "@/components/AppLoading"
 
 const $toast = useToast()
-import {useLoading} from 'vue-loading-overlay'
-
-const $loading = useLoading({});
+import {isLoading, onUnLoading, timeoutValue} from "@/services/loading.service";
+import {NumberTypeEnum} from "@/enums/number.enum";
 
 
 let name = ref('')
 let email = ref('')
 let designation = ref('')
 let contact_no = ref('')
+
 let errors = reactive([])
 
+onBeforeMount(() => {
+  isLoading.value = true
+})
+
+onMounted(() => {
+ onUnLoading()
+})
 
 const submitTheForm = () => {
-
-  const loader = $loading.show({});
-
-  errors.splice(0, errors.length)
+    errors.splice(0, errors.length)
 
   if (!name.value)
     errors.push('Name input reqired!')
@@ -82,9 +88,11 @@ const submitTheForm = () => {
     errors.push('Contact Number input reqired!')
 
   if (errors.length) {
-    loader.hide()
+    onUnLoading()
     return false;
   }
+  isLoading.value = true
+  timeoutValue.value = NumberTypeEnum.LOW
 
   axios.post('http://larapi.com/api/save_contact', {
     name: name.value,
@@ -104,7 +112,7 @@ const submitTheForm = () => {
     $toast.error(error.message)
     console.log(error)
   }).finally(() => {
-    loader.hide()
+    onUnLoading()
   })
 
 }
