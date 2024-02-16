@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+  <AppHeader></AppHeader>
+  <br>
+  <router-view></router-view>
 </template>
 
-<script>
+<script setup>
+import AppHeader from "@/components/AppHeader";
 
 </script>
 
