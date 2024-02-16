@@ -2,11 +2,12 @@ import {defineStore} from "pinia";
 import axios from "axios";
 import {token} from "../axios"
 import router from "@/routes/routes";
+import {ToastMessage} from "@/service/general.service";
 
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({
-        authUser: null
+        authUser: {}
     }),
     getters: {},
     actions: {
@@ -16,9 +17,10 @@ export const useAuthStore = defineStore("auth", {
                 password: creadentials.password,
             }).then(response => {
                 this.authUser = {user: response.data.user, token: response.data.token}
-                console.log(response.data)
-                console.log("token => " + response.data.token.token)
+                localStorage.setItem('token', response.data.token.token)
+                localStorage.setItem('authUser', JSON.stringify({user: response.data.user, token: response.data.token}))
                 token.value = response.data.token.token
+                ToastMessage('success', 'Giriş başarılı! Hoş geldiniz ' + this.authUser.user.name);
                 router.push("/")
             }).catch(err => {
                 console.log(err)
@@ -37,6 +39,19 @@ export const useAuthStore = defineStore("auth", {
                 .finally(() => {
                     console.log('request done!')
                 })
+        },
+        logout() {
+            this.authUser = {};
+            localStorage.removeItem('token')
+            localStorage.removeItem('authUser')
+            ToastMessage('info', 'Çıkış yapıldı!');
+            router.push('/login')
+        },
+        initAuth() {
+            const storedUser = localStorage.getItem('authUser')
+            if (storedUser) {
+                this.authUser = JSON.parse(storedUser)
+            }
         }
     },
 })
