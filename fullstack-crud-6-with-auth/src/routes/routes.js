@@ -5,12 +5,15 @@ import AboutPage from "@/components/AboutPage"
 import ContactList from "@/components/ContactList"
 import CreateContact from "@/components/CreateContact"
 import UserProfile from "@/components/UserProfile"
+import {authMiddleware, loginMiddleware} from "@/middleware/authMid";
 
 const routes = [
-    {path: '/Login', component: AppLogin},
+
+    {path: '/Login', component: AppLogin, beforeEnter: loginMiddleware},
     {
         path: '/',
         component: AppLayout,
+        beforeEnter: authMiddleware,
         children: [
             {
                 path: '/About',

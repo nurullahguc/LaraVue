@@ -19,6 +19,14 @@ use App\Http\Controllers\LoginController;
 Route::post('login', [LoginController::class, 'login']);
 Route::middleware('auth:sanctum')->get('login_control', [LoginController::class, 'login_control']);
 
+Route::group(['prefix' => 'with_auth', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('contacts', [ContactController::class, 'contacts']);
+    Route::post('save_contact', [ContactController::class, 'saveContact']);
+    Route::post('delete_contact/{id}', [ContactController::class, 'deleteContact']);
+    Route::get('get_contact/{id}', [ContactController::class, 'getContact']);
+    Route::post('update_contact/{id}', [ContactController::class, 'updateContact']);
+});
+
 
 Route::get('contacts', [ContactController::class, 'contacts']);
 Route::post('save_contact', [ContactController::class, 'saveContact']);

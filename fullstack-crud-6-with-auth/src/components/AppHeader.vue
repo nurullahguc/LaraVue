@@ -25,14 +25,15 @@
           <li class="nav-item dropdown" data-bs-theme="light">
             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="version-menu"
                aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme">
-              <span>Some Username</span>
+              <span>{{ userName }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <router-link to="/ContactList"
-                   class="dropdown-item d-flex align-items-center justify-content-between" aria-current="true">
+                <a @click.prevent="authStore.logout()"
+                             class="dropdown-item d-flex align-items-center justify-content-between"
+                             aria-current="true">
                   <span class="ms-2">Logout</span><i class="bi bi-check"></i>
-                </router-link>
+                </a>
               </li>
             </ul>
           </li>
@@ -47,10 +48,16 @@
 </template>
 
 <script setup>
-import {defineProps} from "vue";
+import {computed, defineProps} from "vue";
+import {useAuthStore} from "@/sotres/authStore";
+import {storeToRefs} from "pinia"
 
 const props = defineProps(['title'])
+const authStore = useAuthStore()
+const {user} = storeToRefs(authStore)
+console.log(user.value.name)
 
+const userName = computed(() => user.value?.name)
 </script>
 
 <style scoped>

@@ -1,4 +1,10 @@
 <template>
+  <Loading v-model:active="isLoading"
+           :can-cancel="false"
+           :on-cancel="onCancel"
+           :is-full-page="fullPage"></Loading>
+
+
   <AppHeader title="FullStack CRUD w Auth 6"></AppHeader>
   <br>
   <br>
