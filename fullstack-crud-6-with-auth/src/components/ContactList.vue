@@ -21,10 +21,10 @@
       <td>{{ contact.designation }}</td>
       <td>{{ contact.contact_no }}</td>
       <td>
-        <button class="btn btn-primary">Edit</button>
+        <router-link :to="{name: 'EditContact', params: {id: contact.id}}" class="btn btn-primary">Edit</router-link>
       </td>
       <td>
-        <button class="btn btn-danger">Delete</button>
+        <button @click="deleteContact(contact.id)" class="btn btn-danger">Delete</button>
       </td>
     </tr>
     </tbody>
@@ -35,6 +35,7 @@
 import {reactive} from "vue";
 import axios from "axios"
 import {isLoading} from "@/services/general.service";
+import {ToastMessage} from "@/services/general.service";
 
 const contactList = reactive([])
 
@@ -45,10 +46,19 @@ const getContactList = () => {
         contactList.splice(0, contactList.length, ...response.data.contacts)
       })
       .catch(err => err)
-      .finally(() =>{
+      .finally(() => {
         isLoading.value = false
       })
 }
+
+const deleteContact = (id) => {
+  axios.post('/with_auth/delete_contact/' + id)
+      .then(response => {
+        ToastMessage('success', response.data.message, 'İşlem Başarılı!')
+        getContactList()
+      })
+}
+
 
 getContactList()
 

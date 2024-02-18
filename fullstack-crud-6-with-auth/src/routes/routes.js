@@ -3,6 +3,7 @@ import AppLogin from "@/components/AppLogin"
 import AppLayout from "@/components/AppLayout"
 import AboutPage from "@/components/AboutPage"
 import ContactList from "@/components/ContactList"
+import EditContact from "@/components/EditContact"
 import CreateContact from "@/components/CreateContact"
 import UserProfile from "@/components/UserProfile"
 import {authMiddleware, loginMiddleware} from "@/middleware/authMid";
@@ -29,6 +30,11 @@ const routes = [
                 path: '/CreateContact',
                 name: 'CreateContact',
                 component: CreateContact
+            },
+            {
+                path: '/EditContact/:id',
+                name: 'EditContact',
+                component: EditContact
             },
             {
                 path: '/UserProfile',

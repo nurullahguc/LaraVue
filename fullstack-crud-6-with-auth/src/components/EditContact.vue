@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-6">
-      <h2 class="text-center text-info">Create Contact</h2>
+      <h2 class="text-center text-info">Edit Contact</h2>
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <div class="form-label">Name:</div>
@@ -37,6 +37,10 @@
 import {reactive, ref} from "vue"
 import {isLoading, ToastMessage} from "@/services/general.service";
 import axios from "axios";
+import {useRoute} from "vue-router"
+import router from "@/routes/routes";
+
+const route = useRoute()
 
 const errors = reactive([])
 
@@ -70,7 +74,7 @@ const handleSubmit = () => {
 
   isLoading.value = true
 
-  axios.post('/with_auth/save_contact', {
+  axios.post('/with_auth/update_contact/' + route.params.id, {
     name: contact.value.name,
     email: contact.value.email,
     designation: contact.value.designation,
@@ -78,20 +82,30 @@ const handleSubmit = () => {
   })
       .then(response => {
         ToastMessage('success', response.data.message, 'Successfully!')
-        contact.value.name = ''
-        contact.value.email = ''
-        contact.value.designation = ''
-        contact.value.contact_no = ''
       })
       .catch(err => err)
       .then(() => {
         isLoading.value = false
       })
-
 }
 
+const getEditContact = () => {
+  isLoading.value = true
+  axios.get("/with_auth/get_contact/" + route.params.id)
+      .then(response => {
+        contact.value.name = response.data.name
+        contact.value.email = response.data.email
+        contact.value.designation = response.data.designation
+        contact.value.contact_no = response.data.contact_no
+      })
+      .catch(err => {
+        if (err.response.status === 404)
+          router.push('/ContactList')
+      })
+      .then(() => {
+        isLoading.value = false
+      })
+}
+getEditContact()
+
 </script>
-
-<style scoped>
-
-</style>

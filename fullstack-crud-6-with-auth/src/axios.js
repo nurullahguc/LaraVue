@@ -8,7 +8,7 @@ export const token = ref('');
 axios.defaults.baseURL = "http://larapi.com/api";
 
 watchEffect(() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token.value.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token.value?.token}`;
 });
 
 axios.interceptors.response.use(

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -52,6 +53,9 @@ class ContactController extends Controller
     {
         $contact = Contact::find($id);
 
+        if (!$contact)
+            return response()->json(['status' => 404, 'message' => 'Contact not found!'], 404);
+
         return response()->json($contact);
     }
 
@@ -70,6 +74,13 @@ class ContactController extends Controller
             'message' => 'Contact Updated Successfully!',
             'code' => 200,
         ], 200);
+    }
+
+    public function profile_info()
+    {
+        $user = Auth::user();
+
+        return response()->json(['status' => 200, 'user' => $user], 200);
     }
 
 }
