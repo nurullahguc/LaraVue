@@ -1,11 +1,11 @@
 import axios from "axios";
 import {ToastMessage} from "@/services/general.service";
-import { ref, watchEffect } from "vue";
+import {ref, watchEffect} from "vue";
 import {useAuthStore} from "@/sotres/authStore";
 
 export const token = ref('');
 
-axios.defaults.baseURL = "http://larapi.com/api";
+axios.defaults.baseURL = "https://examplebackend.cskyone.com/api";
 
 watchEffect(() => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token.value?.token}`;

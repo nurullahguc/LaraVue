@@ -1,34 +1,36 @@
 <template>
 
   <h2 class="text-primary text-center mb-4">Contact List</h2>
-  <table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Designation</th>
-      <th>Contact Number</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr v-for="contact in contactList" :key="contact.id">
-      <td>{{ contact.id }}</td>
-      <td>{{ contact.name }}</td>
-      <td>{{ contact.email }}</td>
-      <td>{{ contact.designation }}</td>
-      <td>{{ contact.contact_no }}</td>
-      <td>
-        <router-link :to="{name: 'EditContact', params: {id: contact.id}}" class="btn btn-primary">Edit</router-link>
-      </td>
-      <td>
-        <button @click="deleteContact(contact.id)" class="btn btn-danger">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div id="tableContainer">
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Designation</th>
+        <th>Contact Number</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="contact in contactList" :key="contact.id">
+        <td>{{ contact.id }}</td>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.designation }}</td>
+        <td>{{ contact.contact_no }}</td>
+        <td>
+          <router-link :to="{name: 'EditContact', params: {id: contact.id}}" class="btn btn-primary">Edit</router-link>
+        </td>
+        <td>
+          <button @click="deleteContact(contact.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup>
@@ -68,6 +70,14 @@ getContactList()
 
 table thead tr th, table tbody tr td {
   color: #fff !important;
+}
+
+table {
+  white-space: nowrap;
+}
+
+#tableContainer{
+  overflow-x: auto;
 }
 
 </style>

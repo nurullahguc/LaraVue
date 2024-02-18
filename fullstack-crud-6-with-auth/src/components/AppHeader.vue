@@ -1,7 +1,12 @@
 <template>
-  <div class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" style="">
+  <div class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark">
     <div class="container">
-      <router-link to="/ContactList" class="navbar-brand" href="#">{{ props.title }}</router-link>
+      <router-link to="/ContactList" class="navbar-brand">{{ props.title }}</router-link>
+
+      <!-- Navbar toggler for mobile view -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
@@ -18,20 +23,15 @@
           <li class="nav-item">
             <router-link class="nav-link" active-class="active" :to="{name: 'About'}">About</router-link>
           </li>
-
         </ul>
         <ul class="navbar-nav ms-md-auto">
-
           <li class="nav-item dropdown" data-bs-theme="light">
-            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="version-menu"
-               aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <span>{{ userName }}</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <li>
-                <a @click.prevent="authStore.logout()"
-                             class="dropdown-item d-flex align-items-center justify-content-between"
-                             aria-current="true">
+                <a @click.prevent="authStore.logout()" class="dropdown-item d-flex align-items-center justify-content-between">
                   <span class="ms-2">Logout</span><i class="bi bi-check"></i>
                 </a>
               </li>
@@ -45,6 +45,8 @@
       </div>
     </div>
   </div>
+
+
 </template>
 
 <script setup>
