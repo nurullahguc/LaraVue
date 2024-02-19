@@ -26,7 +26,6 @@ Route::group(['prefix' => 'with_auth', 'middleware' => 'auth:sanctum'], function
     Route::get('get_contact/{id}', [ContactController::class, 'getContact']);
     Route::post('update_contact/{id}', [ContactController::class, 'updateContact']);
     Route::get('profile_info', [ContactController::class, 'profile_info']);
-
 });
 
 
