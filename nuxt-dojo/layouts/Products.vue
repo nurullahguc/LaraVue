@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <nav>
+  <header class="shadow-sm bg-white">
+    <nav class="container mx-auto p-4">
       <NuxtLink to="/products">Nuxt Dojo Merch</NuxtLink>
 
     </nav>
@@ -8,12 +8,12 @@
 
   <!-- output the page content -->
 
-  <div>
+  <div class="container mx-auto p-4">
     <slot></slot>
   </div>
 
-  <footer>
-    <ul>
+  <footer class="container mx-auto p-4 flex justify-between border-t-2">
+    <ul class="flex gap-4">
       <li>
         <nuxt-link to="/">Home</nuxt-link>
       </li>

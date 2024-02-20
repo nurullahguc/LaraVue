@@ -9,11 +9,15 @@
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolor fugiat impedit maiores recusandae. Ducimus et
       facere, ipsam minima modi mollitia nam nihil nobis, pariatur quasi quibusdam quis repudiandae, tenetur.
     </p>
+    <div>{{ data }}</div>
     <router-link to="/">Go To Index</router-link>
   </div>
 </template>
 
-<script>
+<script setup>
+import {useFetch} from "nuxt/app";
+
+const {data} = await useFetch('/api/currency/GBP')
 </script>
 
 <style scoped>
