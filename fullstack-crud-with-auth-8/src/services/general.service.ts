@@ -1,5 +1,6 @@
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
+import {ref} from "vue";
 
 type ToastrType = 'success' | 'info' | 'warning' | 'error';
 
@@ -24,3 +25,6 @@ export const ToastMessage = (type: ToastrType, message: string, title?: string):
         hideMethod: 'fadeOut'
     };
 };
+
+
+export const isLoading = ref<boolean>(false)

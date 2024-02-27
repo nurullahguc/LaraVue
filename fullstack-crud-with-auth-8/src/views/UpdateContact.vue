@@ -25,7 +25,7 @@
 import {ref} from "vue";
 import {Contact} from "@/models/contact.model";
 import {contactService} from "@/api/contact.api";
-import {ToastMessage} from "@/services/general.service";
+import {isLoading, ToastMessage} from "@/services/general.service";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
@@ -41,11 +41,15 @@ const contact = ref<Contact>({
 })
 
 const handleSubmit = () => {
+  isLoading.value = true
   contactService.updateContact(contact.value)
       .then(res => {
         ToastMessage('success', res.data.message, 'Successfully!')
       })
       .catch(err => err)
+      .then(() => {
+        isLoading.value = false
+      })
 }
 
 const getContact = () => {

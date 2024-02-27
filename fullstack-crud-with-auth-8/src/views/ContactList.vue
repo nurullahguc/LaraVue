@@ -37,25 +37,34 @@
 import {contactService} from "@/api/contact.api";
 import {ref} from 'vue';
 import {Contact} from "@/models/contact.model";
-import {ToastMessage} from "@/services/general.service";
+import {isLoading, ToastMessage} from "@/services/general.service";
+
 
 const contacts = ref<Contact[]>([]);
 
 const getContacts = () => {
+  isLoading.value = true
   contactService.getContacts()
       .then(res => {
         contacts.value = res.data.contacts;
+      })
+      .finally(() => {
+        isLoading.value = false
       })
 }
 getContacts()
 
 const deleteContact = async (id: number | string) => {
+  isLoading.value = true
   await contactService.deleteContact(id)
       .then(res => {
         getContacts()
         ToastMessage('success', res.data.message, 'Successfully')
       })
       .catch(err => err)
+      .finally(() => {
+        isLoading.value = false
+      })
 }
 
 </script>

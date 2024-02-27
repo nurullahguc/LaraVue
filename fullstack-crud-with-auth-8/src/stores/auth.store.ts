@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {ToastMessage} from "@/services/general.service";
+import {isLoading, ToastMessage} from "@/services/general.service";
 import {computed, ref} from "vue"
 import {apiClient} from "@/common/http-common";
 import {Credentials, User} from "@/models/auth.model";
@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = computed(() => !!user.value)
 
     const login = async (credentials: Credentials) => {
+        isLoading.value = true
         await authService.getToken()
         try {
             await authService.login(credentials)
@@ -25,6 +26,8 @@ export const useAuthStore = defineStore('auth', () => {
         } catch (err) {
             console.log(err)
         }
+
+        isLoading.value = false
     }
 
 
@@ -36,6 +39,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const logout = async () => {
+        isLoading.value = true
         if (!isLoggedIn.value) {
             ToastMessage('error', 'You need to login first!', 'Error')
             return;
@@ -49,6 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
             console.log(e)
         }
 
+        isLoading.value = false
     }
 
     const initAuth = async () => {

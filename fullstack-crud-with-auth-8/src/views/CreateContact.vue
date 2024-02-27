@@ -25,7 +25,7 @@
 import {ref} from "vue";
 import {Contact} from "@/models/contact.model";
 import {contactService} from "@/api/contact.api";
-import {ToastMessage} from "@/services/general.service";
+import {isLoading, ToastMessage} from "@/services/general.service";
 import router from "@/router";
 
 const contact = ref<Contact>({
@@ -36,6 +36,7 @@ const contact = ref<Contact>({
 })
 
 const handleSubmit = () => {
+  isLoading.value = true
   contactService.createContact(contact.value)
       .then(res => {
         ToastMessage('success', 'Contact created!', 'Successfully!')
@@ -45,6 +46,9 @@ const handleSubmit = () => {
         contact.value.contact_no = ''
       })
       .catch(err => err)
+      .then(() => {
+        isLoading.value = false
+      })
 }
 
 </script>

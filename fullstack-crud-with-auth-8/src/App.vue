@@ -1,5 +1,9 @@
 <template>
   <nav>
+    <loading v-model:active="isLoading"
+             :can-cancel="true"
+             :on-cancel="onCancel"
+             :is-full-page="fullPage"/>
     <ul>
       <li>
         <router-link to="/Login">Login</router-link>
@@ -16,7 +20,7 @@
     </ul>
   </nav>
   <pre v-if="authStore.isLoggedIn">
-    {{ 'Welcome ' +  authStore.user.name }}
+    {{ 'Welcome ' + authStore.user.name }}
   </pre>
   <router-view></router-view>
 </template>
@@ -24,6 +28,9 @@
 
 <script lang="ts" setup>
 import {useAuthStore} from "@/stores/auth.store";
+import Loading from 'vue-loading-overlay';
+import {isLoading} from "@/services/general.service";
+
 const authStore = useAuthStore()
 </script>
 
