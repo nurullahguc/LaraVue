@@ -2,7 +2,7 @@ import axios, {AxiosInstance} from "axios";
 import {ToastMessage} from "@/services/general.service";
 
 export const apiClient: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://sanctum.cskyone.com',
     headers: {
         'Content-type': 'application/json; charset=utf-8',
         'Accept-Language': 'tr',
