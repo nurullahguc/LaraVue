@@ -53,9 +53,13 @@ const handleSubmit = () => {
 }
 
 const getContact = () => {
+  isLoading.value = true
   contactService.getContact(contactId.value)
       .then(res => {
         contact.value = res.data
+      })
+      .finally(() => {
+        isLoading.value = false
       })
 }
 getContact()

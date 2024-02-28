@@ -42,6 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
         isLoading.value = true
         if (!isLoggedIn.value) {
             ToastMessage('error', 'You need to login first!', 'Error')
+            isLoading.value = false
             return;
         }
         try {
